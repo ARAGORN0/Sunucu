@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kişisel Bilgilerim</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0; /* Yedek renk */
+            background-image: url('anaarkapilan.jpg'); /* Arka plan resmi buraya */
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        .profil-cerceve{text-align:center;cursor:pointer;margin-bottom:20px}.profil-fotografi{width:150px;height:150px;border-radius:50%;overflow:hidden;margin-bottom:10px;border:5px solid #ccc;display:flex;justify-content:center;align-items:center}.profil-fotografi img{width:100%;height:100%;object-fit:cover}.isim{font-size:1.5em;font-weight:bold;color:#333;margin-bottom:2px}.burc{font-size:1em;color:#777;margin-bottom:20px}.oval-kutular-alani{width:250px;display:flex;flex-direction:column;align-items:center;margin-top:20px;margin-bottom:20px}.oval-kutu{background-color:#808080;color:#fff;border-radius:25px;text-decoration:none;width:100%;box-sizing:border-box;margin-bottom:10px;height:40px;overflow:hidden;position:relative;display:flex;flex-direction:column;align-items:flex-start;padding:10px}.oval-kutu>span{display:block;width:100%;height:40px;font-weight:bold;font-size:1.2em;color:#000;cursor:pointer;text-align:center;line-height:40px;position:absolute;top:0;left:0}.oval-kutu .icerik{display:none;padding-top:45px;font-size:1em;line-height:1.5em}.oval-kutu .icerik>div{opacity:0;margin-bottom:5px;color:#000;cursor:pointer}.oval-kutu .icerik a{color:#000;text-decoration:none;display:flex;align-items:center;margin-bottom:5px}.oval-kutu .icerik a img{width:30px;height:30px;margin-right:10px}.oval-kutu .icerik a:hover{text-decoration:underline}.buyuk-fotografi-arkaplan{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.8);justify-content:center;align-items:center;z-index:10;cursor:pointer}.buyuk-fotografi-cerceve{width:300px;height:300px;border-radius:50%;overflow:hidden}.buyuk-fotografi-cerceve img{width:100%;height:100%;object-fit:cover}#kontrolPaneliLinki{display:none;margin-top:10px;font-size:1.5em;font-weight:bold}#kontrolPaneliLinki a{color:darkred;text-decoration:none;background-color:yellow;padding:10px 20px;border-radius:5px;box-shadow:2px 2px 5px rgba(0,0,0,.3);cursor:pointer}#adSoyadFormuDiv{display:none;margin-top:15px}#adSoyadFormuDiv div{margin-bottom:10px}#adSoyadFormuDiv button{padding:8px 15px;border:none;border-radius:4px;background-color:#007bff;color:#fff;cursor:pointer;font-size:1em}#adSoyadFormuDiv button:hover{background-color:#0056b3}#dahaFazlaBilgiButon{cursor:pointer;color:black;text-decoration:underline}#adSoyadMetniKontrol{cursor:pointer}
+    </style>
+</head>
+<body>
+    <div class="profil-cerceve">
+        <div class="profil-fotografi" id="kucukFotografAlani">
+            <img id="kucukFotograf" src="fotografim.jpg" alt="Profil Fotoğrafı">
+        </div>
+        <div class="isim" id="isimAlani">Ahmet Arslan</div>
+        <div class="burc"></div>
+        <p id="kontrolPaneliLinki"><a href="sifre.html" target="_blank" id="kontrolPaneliLinkElementi">Kontrol Paneline Git</a></p>
+    </div>
+
+    <div class="oval-kutular-alani">
+        <div class="oval-kutu" id="sosyalMedyaKutu">
+            <span id="sosyalMedyaButon">Sosyal Medya</span>
+            <div class="icerik">
+                <a href="https://www.snapchat.com/add/arslanahmett0?share_id=EDwJ2uzfz8w&locale=tr-TR" target="_blank"><img src="snapchat.svg" alt="Snapchat"> arslanahmett0</a><br>
+                <a href="https://pin.it/5QKOlUNxK" target="_blank"><img src="pinterest.svg" alt="Pinterest"> ahmet</a><br>
+                <a href="https://x.com/ArslanAhmett00?t=ahPCX2kCVhstOb8lDFQUgw&s=09" target="_blank"><img src="x.svg" alt="X (Twitter)"> ArslanAhmett0</a><br>
+                <a href="instagram.html" target="_blank"><img src="instagram.svg" alt="Instagram"> arslanahmett0</a><br>
+                <a href="https://discord.com/users/766405202299191306" target="_blank"><img src="discord.svg" alt="Discord"> arslanahmet</a><br>
+            </div>
+        </div>
+        <div class="oval-kutu" id="hakkindaKutu">
+            <span id="hakkindaButon">Hakkında</span>
+            <div class="icerik">
+                <div data-index="0" id="adSoyadDivKontrol">Ad Soyad: <span id="adSoyadMetniKontrol">Ahmet Arslan</span></div>
+                <div data-index="1">Okulu: Afşin Anadolu Lisesi</div>
+                <div data-index="2">Doğum Yeri: Kahramanmaraş Afşin</div>
+                <div data-index="3"><a href="daha_fazla_bilgi.html" target="_blank" id="dahaFazlaBilgiButon">bana ulaşmak için tıklayın</a></div>
+                <div id="adSoyadFormuDiv" style="display:none;">
+                    <form id="adSoyadFormu">
+                        <div>Adınız Soyadınız: <input type="text" id="adSoyadInput"></div>
+                        <button type="button" onclick="adSoyadGonder()">Gönder</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="buyuk-fotografi-arkaplan" id="buyukFotografArkaplan">
+        <div class="buyuk-fotografi-cerceve">
+            <img id="buyukFotograf" src="" alt="Büyük Boyutlu Fotoğraf">
+        </div>
+    </div>
+
+    <script>
+        const sosyalMedyaButon = document.getElementById('sosyalMedyaButon');
+        const hakkindaButon = document.getElementById('hakkindaButon');
+        const kucukFotografAlani = document.getElementById('kucukFotografAlani');
+        const kucukFotograf = document.getElementById('kucukFotograf');
+        const sosyalMedyaKutu = document.getElementById('sosyalMedyaKutu');
+        const hakkindaKutu = document.getElementById('hakkindaKutu');
+        const sosyalMedyaIcerik = sosyalMedyaKutu.querySelector('.icerik');
+        const hakkindaIcerik = hakkindaKutu.querySelector('.icerik');
+        const buyukFotograf = document.getElementById('buyukFotograf');
+        const buyukFotografArkaplan = document.getElementById('buyukFotografArkaplan');
+        const kontrolPaneliLinki = document.getElementById('kontrolPaneliLinki');
+        const adSoyadMetniKontrolElement = document.getElementById('adSoyadMetniKontrol');
+        const dahaFazlaBilgiButon = document.getElementById('dahaFazlaBilgiButon');
+        const adSoyadFormuDiv = document.getElementById('adSoyadFormuDiv');
+        const adSoyadInput = document.getElementById('adSoyadInput');
+        const adSoyadFormu = document.getElementById('adSoyadFormu');
+        const isimAlaniElement = document.getElementById('isimAlani');
+        const adSoyadDivKontrol = document.getElementById('adSoyadDivKontrol');
+        const ulasimFormuContainer = document.getElementById('ulasimFormuContainer');
+
+        const animasyonSuresiSosyalMedya = 2500;
+        const animasyonSuresiHakkinda = 2500;
+        const gorunmeGecikmesi = 200;
+
+        let tiklamaSayisiKontrolPanel = 0;
+        let ilkTiklamaZamaniKontrolPanel = null;
+        const beklemeSuresiKontrolPanel = 1000;
+        const hedefTiklamaSayisiKontrolPanel = 5;
+
+        sosyalMedyaButon.addEventListener('click', () => {if (sosyalMedyaKutu.offsetHeight <= 40) {kutuyuAc(sosyalMedyaKutu, sosyalMedyaIcerik, animasyonSuresiSosyalMedya, 0);} else {kutuyuKapat(sosyalMedyaKutu, sosyalMedyaIcerik, animasyonSuresiSosyalMedya, 0);}});
+        hakkindaButon.addEventListener('click', () => {if (hakkindaKutu.offsetHeight <= 40) {kutuyuAc(hakkindaKutu, hakkindaIcerik, animasyonSuresiHakkinda, gorunmeGecikmesi);} else {kutuyuKapat(hakkindaKutu, hakkindaIcerik, animasyonSuresiHakkinda, gorunmeGecikmesi);}});
+        kucukFotografAlani.addEventListener('click', () => {buyukFotograf.src = kucukFotograf.src;buyukFotografArkaplan.style.display = 'flex';});
+        buyukFotografArkaplan.addEventListener('click', () => {buyukFotografArkaplan.style.display = 'none';});
+        dahaFazlaBilgiButon.addEventListener('click', () => {
+            const ulasimFormuContainer = document.getElementById('ulasimFormuContainer');
+            if (ulasimFormuContainer) {
+                ulasimFormuContainer.style.display = 'none';
+            }
+            adSoyadFormuDiv.style.display = 'none';
+        });
+        adSoyadDivKontrol.addEventListener('click', () => {
+            const currentTime = new Date().getTime();
+            if (tiklamaSayisiKontrolPanel === 0) {
+                ilkTiklamaZamaniKontrolPanel = currentTime;
+                tiklamaSayisiKontrolPanel++;
+            } else if (currentTime - ilkTiklamaZamaniKontrolPanel <= beklemeSuresiKontrolPanel * tiklamaSayisiKontrolPanel) {
+                tiklamaSayisiKontrolPanel++;
+            } else {
+                tiklamaSayisiKontrolPanel = 1;
+                ilkTiklamaZamaniKontrolPanel = currentTime;
+            }
+            if (tiklamaSayisiKontrolPanel === hedefTiklamaSayisiKontrolPanel) {
+                kontrolPaneliLinki.style.display = 'block';
+                tiklamaSayisiKontrolPanel = 0;
+                ilkTiklamaZamaniKontrolPanel = null;
+            }
+        });
+
+        function kutuyuAc(kutu, icerik, sure, elementGecikmesi) {const hedefYukseklik = kutu.scrollHeight;let currentHeight = kutu.offsetHeight;const artis = (hedefYukseklik - currentHeight) / (sure / 10);const icerikElementleri = icerik.children;for (let i = 0; i < icerikElementleri.length; i++) {setTimeout(() => {icerikElementleri[i].style.opacity = 1;}, i * elementGecikmesi);}const animasyon = setInterval(() => {currentHeight += artis;kutu.style.height = currentHeight + 'px';if (currentHeight >= hedefYukseklik) {clearInterval(animasyon);icerik.style.display = 'block';}}, 10);}
+        function kutuyuKapat(kutu, icerik, sure, elementGecikmesi) {let currentHeight = kutu.offsetHeight;const azalisYukseklik = currentHeight / (sure / 10);const icerikElementleri = icerik.children;const animasyon = setInterval(() => {currentHeight -= azalisYukseklik;kutu.style.height = currentHeight + 'px';const kapanmaOrani = (kutu.offsetHeight - 40) / (kutu.scrollHeight - 40);for (let i = 0; i < icerikElementleri.length; i++) {icerikElementleri[i].style.opacity = kapanmaOrani > 0 ? kapanmaOrani : 0;}if (currentHeight <= 40) {clearInterval(animasyon);kutu.style.height = '40px';icerik.style.display = 'none';for (let i = 0; i < icerikElementleri.length; i++) {icerikElementleri[i].style.opacity = 0;}}}, 10);}
+        function adSoyadGonder() {const adSoyad = adSoyadInput.value.trim();if (adSoyad !== "") {let basvurular = JSON.parse(localStorage.getItem('kullaniciBasvurulari')) || [];basvurular.push({ adSoyad: adSoyad });localStorage.setItem('kullaniciBasvurulari', JSON.stringify(basvurular));adSoyadInput.value = '';adSoyadFormuDiv.style.display = 'none';} else {alert('Lütfen adınızı ve soyadınızı girin.');}}
+    </script>
+</body>
+</html>

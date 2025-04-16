@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontrol Paneli</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-image: url('anaarkapilan.jpg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .kontrol-paneli-baslik {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .kontrol-paneli-cerceve {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .kontrol-paneli-bolum {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .kontrol-paneli-baslik-2 {
+            color: #555;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .bekleyenler, .onaylananlar, .reddedilenler {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .bekleyenler h3, .onaylananlar h3, .reddedilenler h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #444;
+        }
+
+        .ad-soyad-listesi {
+            list-style: none;
+            padding: 0;
+        }
+
+        .ad-soyad-listesi li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dotted #bbb;
+        }
+
+        .ad-soyad-listesi li:last-child {
+            border-bottom: none;
+        }
+
+        .ad-soyad-islemler button {
+            padding: 5px 10px;
+            margin-left: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .ad-soyad-islemler .onayla {
+            background-color: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+
+        .ad-soyad-islemler .reddet {
+            background-color: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .ad-soyad-islemler .sil {
+            background-color: #6c757d;
+            color: white;
+            border-color: #6c757d;
+        }
+
+        .geri-buton {
+            display: block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1em;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .geri-buton:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+  <h1 class="kontrol-paneli-baslik">Kontrol Paneli</h1>
+
+  <div class="kontrol-paneli-cerceve">
+    <div class="kontrol-paneli-bolum">
+      <h2 class="kontrol-paneli-baslik-2">Kullanıcı Başvuruları</h2>
+
+      <div class="bekleyenler">
+        <h3>Bekleyenler</h3>
+        <ul class="ad-soyad-listesi" id="bekleyenlerListesi"></ul>
+      </div>
+
+      <div class="onaylananlar">
+        <h3>Onaylananlar</h3>
+        <ul class="ad-soyad-listesi" id="onaylananlarListesi"></ul>
+      </div>
+
+      <div class="reddedilenler">
+        <h3>Reddedilenler</h3>
+        <ul class="ad-soyad-listesi" id="reddedilenlerListesi"></ul>
+      </div>
+    </div>
+  </div>
+
+  <a href="index.html" class="geri-buton">Ana Sayfaya Geri Dön</a>
+
+  <script>
+    const bekleyenlerListesi = document.getElementById('bekleyenlerListesi');
+    const onaylananlarListesi = document.getElementById('onaylananlarListesi');
+    const reddedilenlerListesi = document.getElementById('reddedilenlerListesi');
+    let basvurular = [];
+
+    async function verileriYukle() {
+      try {
+        const response = await fetch('/verileri-getir');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        basvurular = data;
+        verileriGoster();
+      } catch (error) {
+        console.error('Veri yüklenirken bir hata oluştu:', error);
+        // Kullanıcıya bir hata mesajı gösterebilirsiniz
+      }
+    }
+
+    function verileriGoster() {
+      bekleyenlerListesi.innerHTML = '';
+      onaylananlarListesi.innerHTML = '';
+      reddedilenlerListesi.innerHTML = '';
+
+      basvurular.forEach((basvuru, index) => {
+        const li = document.createElement('li');
+        const adSoyadSpan = document.createElement('span');
+        adSoyadSpan.textContent = basvuru.adSoyad;
+        li.appendChild(adSoyadSpan);
+
+        if (basvuru.not) {
+          const dahaFazlaBilgiButton = document.createElement('button');
+          dahaFazlaBilgiButton.textContent = 'Notu Göster';
+          dahaFazlaBilgiButton.addEventListener('click', () => {
+            alert(`Not: ${basvuru.not}`);
+          });
+          li.appendChild(dahaFazlaBilgiButton);
+        }
+
+        const islemler = document.createElement('div');
+        islemler.classList.add('ad-soyad-islemler');
+
+        const silButton = document.createElement('button');
+        silButton.textContent = 'Sil';
+        silButton.classList.add('sil');
+        silButton.addEventListener('click', () => {
+          basvurular.splice(index, 1);
+          guncelleJSON();
+        });
+        islemler.appendChild(silButton);
+
+        if (basvuru.durum === 'bekleyen') {
+          const onaylaButton = document.createElement('button');
+          onaylaButton.textContent = 'Onayla';
+          onaylaButton.classList.add('onayla');
+          onaylaButton.addEventListener('click', () => {
+            basvurular[index].durum = 'onaylanan';
+            guncelleJSON();
+          });
+
+          const reddetButton = document.createElement('button');
+          reddetButton.textContent = 'Reddet';
+          reddetButton.classList.add('reddet');
+          reddetButton.addEventListener('click', () => {
+            basvurular[index].durum = 'reddedilen';
+            guncelleJSON();
+          });
+
+          islemler.insertBefore(reddetButton, silButton);
+          islemler.insertBefore(onaylaButton, reddetButton);
+          li.appendChild(islemler);
+          bekleyenlerListesi.appendChild(li);
+        } else if (basvuru.durum === 'onaylanan') {
+          const bekleButton = document.createElement('button');
+          bekleButton.textContent = 'Beklemeye Al';
+          bekleButton.addEventListener('click', () => {
+            basvurular[index].durum = 'bekleyen';
+            guncelleJSON();
+          });
+          islemler.insertBefore(bekleButton, silButton);
+          li.appendChild(islemler);
+          onaylananlarListesi.appendChild(li);
+        } else if (basvuru.durum === 'reddedilen') {
+          const bekleButton = document.createElement('button');
+          bekleButton.textContent = 'Beklemeye Al';
+          bekleButton.addEventListener('click', () => {
+            basvurular[index].durum = 'bekleyen';
+            guncelleJSON();
+          });
+          islemler.insertBefore(bekleButton, silButton);
+          li.appendChild(islemler);
+          reddedilenlerListesi.appendChild(li);
+        }
+      });
+    }
+
+    async function guncelleJSON() {
+      try {
+        const response = await fetch('/kaydet/guncelle', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(basvurular),
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        if (data.durum === 'onaylandi') {
+          console.log('Veriler başarıyla güncellendi.');
+          verileriGoster();
+        } else {
+          console.error('Veriler güncellenirken bir hata oluştu:', data.mesaj);
+        }
+      } catch (error) {
+        console.error('Veri güncelleme hatası:', error);
+      }
+    }
+
+    window.onload = verileriYukle;
+  </script>
+</body>
+</html>

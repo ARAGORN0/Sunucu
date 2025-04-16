@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daha Fazla Bilgi</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+            background-image: url('anaarkapilan.jpg'); /* Arka plan resmi buraya */
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 320px;
+        }
+
+        input[type="text"], textarea {
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 280px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+
+        .not-ekle-alani {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .not-ekle-alani input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        #notGirmeAlani {
+            display: none;
+        }
+
+        .mesaj {
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        .uyari {
+            color: red;
+        }
+
+        .onaylandi {
+            color: green;
+        }
+
+        .geri-butonu {
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+
+        .geri-butonu:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <input type="text" id="adSoyad" placeholder="Adınız ve Soyadınız">
+        <div id="sonucMesaj" class="mesaj uyari">Lütfen adınızı girin.</div>
+        <div class="not-ekle-alani">
+            <input type="checkbox" id="notEkleCheckbox">
+            <label for="notEkleCheckbox">Not göndermek için tıkla</label>
+        </div>
+        <div id="notGirmeAlani">
+            <textarea id="kullaniciNotu" placeholder="Notunuzu girin"></textarea>
+        </div>
+        <button id="gonderButonu">Gönder</button>
+    </div>
+    <a href="index.html" class="geri-butonu">Geri Dön</a>
+
+    <script>
+        const adSoyadInput = document.getElementById('adSoyad');
+        const gonderButonu = document.getElementById('gonderButonu');
+        const sonucMesajDiv = document.getElementById('sonucMesaj');
+        const notEkleCheckbox = document.getElementById('notEkleCheckbox');
+        const notGirmeAlani = document.getElementById('notGirmeAlani');
+        const kullaniciNotuInput = document.getElementById('kullaniciNotu');
+
+        // Sayfa ilk yüklendiğinde "Lütfen adınızı girin." mesajını göster
+        sonucMesajDiv.textContent = 'Lütfen adınızı girin.';
+        sonucMesajDiv.className = 'mesaj uyari';
+
+        notEkleCheckbox.addEventListener('change', function() {
+            notGirmeAlani.style.display = this.checked ? 'block' : 'none';
+        });
+
+        gonderButonu.addEventListener('click', () => {
+            const girilenAdSoyad = adSoyadInput.value.trim();
+            const kullaniciNotu = notEkleCheckbox.checked ? kullaniciNotuInput.value.trim() : '';
+
+            if (girilenAdSoyad !== '') {
+                fetch('/kaydet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ adSoyad: girilenAdSoyad, not: kullaniciNotu }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    sonucMesajDiv.textContent = data.mesaj;
+                    sonucMesajDiv.className = `mesaj ${data.durum}`;
+                    adSoyadInput.value = '';
+                    notEkleCheckbox.checked = false;
+                    notGirmeAlani.style.display = 'none';
+                    kullaniciNotuInput.value = '';
+                })
+                .catch((error) => {
+                    console.error('Hata:', error);
+                    sonucMesajDiv.textContent = 'Veri kaydedilirken bir hata oluştu.';
+                    sonucMesajDiv.className = 'mesaj uyari';
+                });
+            } else {
+                sonucMesajDiv.textContent = 'Lütfen adınızı girin.';
+                sonucMesajDiv.className = 'mesaj uyari';
+            }
+        });
+
+        adSoyadInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                gonderButonu.click();
+            }
+        });
+    </script>
+</body>
+</html>
