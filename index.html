@@ -1,133 +1,347 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kişisel Bilgilerim</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0; /* Yedek renk */
-            background-image: url('anaarkapilan.jpg'); /* Arka plan resmi buraya */
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-attachment: fixed;
-            background-size: cover;
-        }
-        .profil-cerceve{text-align:center;cursor:pointer;margin-bottom:20px}.profil-fotografi{width:150px;height:150px;border-radius:50%;overflow:hidden;margin-bottom:10px;border:5px solid #ccc;display:flex;justify-content:center;align-items:center}.profil-fotografi img{width:100%;height:100%;object-fit:cover}.isim{font-size:1.5em;font-weight:bold;color:#333;margin-bottom:2px}.burc{font-size:1em;color:#777;margin-bottom:20px}.oval-kutular-alani{width:250px;display:flex;flex-direction:column;align-items:center;margin-top:20px;margin-bottom:20px}.oval-kutu{background-color:#808080;color:#fff;border-radius:25px;text-decoration:none;width:100%;box-sizing:border-box;margin-bottom:10px;height:40px;overflow:hidden;position:relative;display:flex;flex-direction:column;align-items:flex-start;padding:10px}.oval-kutu>span{display:block;width:100%;height:40px;font-weight:bold;font-size:1.2em;color:#000;cursor:pointer;text-align:center;line-height:40px;position:absolute;top:0;left:0}.oval-kutu .icerik{display:none;padding-top:45px;font-size:1em;line-height:1.5em}.oval-kutu .icerik>div{opacity:0;margin-bottom:5px;color:#000;cursor:pointer}.oval-kutu .icerik a{color:#000;text-decoration:none;display:flex;align-items:center;margin-bottom:5px}.oval-kutu .icerik a img{width:30px;height:30px;margin-right:10px}.oval-kutu .icerik a:hover{text-decoration:underline}.buyuk-fotografi-arkaplan{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.8);justify-content:center;align-items:center;z-index:10;cursor:pointer}.buyuk-fotografi-cerceve{width:300px;height:300px;border-radius:50%;overflow:hidden}.buyuk-fotografi-cerceve img{width:100%;height:100%;object-fit:cover}#kontrolPaneliLinki{display:none;margin-top:10px;font-size:1.5em;font-weight:bold}#kontrolPaneliLinki a{color:darkred;text-decoration:none;background-color:yellow;padding:10px 20px;border-radius:5px;box-shadow:2px 2px 5px rgba(0,0,0,.3);cursor:pointer}#adSoyadFormuDiv{display:none;margin-top:15px}#adSoyadFormuDiv div{margin-bottom:10px}#adSoyadFormuDiv button{padding:8px 15px;border:none;border-radius:4px;background-color:#007bff;color:#fff;cursor:pointer;font-size:1em}#adSoyadFormuDiv button:hover{background-color:#0056b3}#dahaFazlaBilgiButon{cursor:pointer;color:black;text-decoration:underline}#adSoyadMetniKontrol{cursor:pointer}
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#17161C">
+<title>Sessiz Stüdyo</title>
+<style>
+:root{--bg:#17161c;--card:#22212a;--line:#3a3945;--tx:#f1efe8;--mu:#b4b2a9;--ac:#7f77dd;--acl:#afa9ec;--ok:#c0dd97;--okb:#173404;--wa:#fac775;--wab:#412402;--er:#f09595}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15px;line-height:1.5}
+#app{display:flex;flex-direction:column;height:100%;padding-top:env(safe-area-inset-top,0)}
+main{flex:1;overflow-y:auto;padding:16px 16px 24px}
+h1{font-size:20px;font-weight:600;margin:0 0 14px}
+label{display:block;font-size:13px;color:var(--mu);margin:14px 0 6px}
+input,textarea{width:100%;background:var(--card);border:1px solid var(--line);border-radius:10px;color:var(--tx);padding:11px 12px;font:inherit}
+textarea{min-height:76px;resize:vertical}
+input:focus,textarea:focus{outline:2px solid var(--ac);outline-offset:1px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:transparent;color:var(--mu);padding:7px 14px;border-radius:999px;font:inherit;font-size:14px}
+.chip.on{background:var(--ac);border-color:var(--ac);color:#17161c;font-weight:600}
+.btn{display:block;width:100%;margin-top:18px;padding:13px;border:0;border-radius:10px;background:var(--ac);color:#17161c;font:inherit;font-weight:600}
+.btn.alt{background:transparent;border:1px solid var(--line);color:var(--tx);margin-top:10px}
+.btn:active{transform:scale(.98)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:12px}
+.scene img{width:100%;height:170px;object-fit:cover;border-radius:8px;margin-bottom:8px;background:#2c2b35}
+.row{display:flex;align-items:center;gap:10px}
+.grow{flex:1;min-width:0}
+.sub{font-size:13px;color:var(--mu)}
+.tag{font-size:12px;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.ok{background:var(--okb);color:var(--ok)}.wa{background:var(--wab);color:var(--wa)}
+.msg{margin-top:14px;font-size:14px;color:var(--mu)}.msg.err{color:var(--er)}
+nav{display:flex;border-top:1px solid var(--line);background:#1c1b22;padding-bottom:env(safe-area-inset-bottom,0)}
+nav button{flex:1;background:none;border:0;color:#888780;padding:10px 0 9px;font:inherit;font-size:12px}
+nav button svg{display:block;margin:0 auto 3px;width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav button.on{color:var(--acl)}
+.hide{display:none}
+</style>
 </head>
 <body>
-    <div class="profil-cerceve">
-        <div class="profil-fotografi" id="kucukFotografAlani">
-            <img id="kucukFotograf" src="fotografim.jpg" alt="Profil Fotoğrafı">
-        </div>
-        <div class="isim" id="isimAlani">Ahmet Arslan</div>
-        <div class="burc"></div>
-        <p id="kontrolPaneliLinki"><a href="sifre.html" target="_blank" id="kontrolPaneliLinkElementi">Kontrol Paneline Git</a></p>
-    </div>
+<div id="app">
+<main>
+<section id="v-uret">
+  <h1>Yeni video</h1>
+  <label for="konu">Konu veya fikir</label>
+  <textarea id="konu" placeholder="Uykusuzluğun beyne 5 etkisi"></textarea>
+  <label>AI karakter</label>
+  <div class="chips" id="karakter"></div>
+  <label>Süre</label>
+  <div class="chips" id="sure"></div>
+  <button class="btn" id="uretBtn">Senaryo üret</button>
+  <div id="durum" class="msg"></div>
+  <div id="sonuc"></div>
+</section>
 
-    <div class="oval-kutular-alani">
-        <div class="oval-kutu" id="sosyalMedyaKutu">
-            <span id="sosyalMedyaButon">Sosyal Medya</span>
-            <div class="icerik">
-                <a href="https://www.snapchat.com/add/arslanahmett0?share_id=EDwJ2uzfz8w&locale=tr-TR" target="_blank"><img src="snapchat.svg" alt="Snapchat"> arslanahmett0</a><br>
-                <a href="https://pin.it/5QKOlUNxK" target="_blank"><img src="pinterest.svg" alt="Pinterest"> ahmet</a><br>
-                <a href="https://x.com/ArslanAhmett00?t=ahPCX2kCVhstOb8lDFQUgw&s=09" target="_blank"><img src="x.svg" alt="X (Twitter)"> ArslanAhmett0</a><br>
-                <a href="instagram.html" target="_blank"><img src="instagram.svg" alt="Instagram"> arslanahmett0</a><br>
-                <a href="https://discord.com/users/766405202299191306" target="_blank"><img src="discord.svg" alt="Discord"> arslanahmet</a><br>
-            </div>
-        </div>
-        <div class="oval-kutu" id="hakkindaKutu">
-            <span id="hakkindaButon">Hakkında</span>
-            <div class="icerik">
-                <div data-index="0" id="adSoyadDivKontrol">Ad Soyad: <span id="adSoyadMetniKontrol">Ahmet Arslan</span></div>
-                <div data-index="1">Okulu: Afşin Anadolu Lisesi</div>
-                <div data-index="2">Doğum Yeri: Kahramanmaraş Afşin</div>
-                <div data-index="3"><a href="daha_fazla_bilgi.html" target="_blank" id="dahaFazlaBilgiButon">bana ulaşmak için tıklayın</a></div>
-                <div id="adSoyadFormuDiv" style="display:none;">
-                    <form id="adSoyadFormu">
-                        <div>Adınız Soyadınız: <input type="text" id="adSoyadInput"></div>
-                        <button type="button" onclick="adSoyadGonder()">Gönder</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+<section id="v-kuyruk" class="hide">
+  <h1>Kuyruk</h1>
+  <div id="kuyrukListe"></div>
+</section>
 
-    <div class="buyuk-fotografi-arkaplan" id="buyukFotografArkaplan">
-        <div class="buyuk-fotografi-cerceve">
-            <img id="buyukFotograf" src="" alt="Büyük Boyutlu Fotoğraf">
-        </div>
-    </div>
+<section id="v-hesap" class="hide">
+  <h1>Hesaplar</h1>
+  <div class="card row"><div class="grow"><b>YouTube</b><div class="sub">Şimdilik paylaşım menüsüyle</div></div><span class="tag wa">Elle</span></div>
+  <div class="card row"><div class="grow"><b>Instagram</b><div class="sub">Şimdilik paylaşım menüsüyle</div></div><span class="tag wa">Elle</span></div>
+  <div class="card row"><div class="grow"><b>TikTok</b><div class="sub">Şimdilik paylaşım menüsüyle</div></div><span class="tag wa">Elle</span></div>
+  <p class="msg">Otomatik paylaşım sonraki sürümde eklenecek. Önce YouTube, sonra Instagram.</p>
+</section>
 
-    <script>
-        const sosyalMedyaButon = document.getElementById('sosyalMedyaButon');
-        const hakkindaButon = document.getElementById('hakkindaButon');
-        const kucukFotografAlani = document.getElementById('kucukFotografAlani');
-        const kucukFotograf = document.getElementById('kucukFotograf');
-        const sosyalMedyaKutu = document.getElementById('sosyalMedyaKutu');
-        const hakkindaKutu = document.getElementById('hakkindaKutu');
-        const sosyalMedyaIcerik = sosyalMedyaKutu.querySelector('.icerik');
-        const hakkindaIcerik = hakkindaKutu.querySelector('.icerik');
-        const buyukFotograf = document.getElementById('buyukFotograf');
-        const buyukFotografArkaplan = document.getElementById('buyukFotografArkaplan');
-        const kontrolPaneliLinki = document.getElementById('kontrolPaneliLinki');
-        const adSoyadMetniKontrolElement = document.getElementById('adSoyadMetniKontrol');
-        const dahaFazlaBilgiButon = document.getElementById('dahaFazlaBilgiButon');
-        const adSoyadFormuDiv = document.getElementById('adSoyadFormuDiv');
-        const adSoyadInput = document.getElementById('adSoyadInput');
-        const adSoyadFormu = document.getElementById('adSoyadFormu');
-        const isimAlaniElement = document.getElementById('isimAlani');
-        const adSoyadDivKontrol = document.getElementById('adSoyadDivKontrol');
-        const ulasimFormuContainer = document.getElementById('ulasimFormuContainer');
+<section id="v-ayar" class="hide">
+  <h1>Ayarlar</h1>
+  <label for="kGemini">Gemini API anahtarı</label>
+  <input id="kGemini" type="password" autocomplete="off" placeholder="AIza...">
+  <label for="kModel">Gemini model adı</label>
+  <input id="kModel" placeholder="gemini-3.8-flash">
+  <label for="kTts">Ses modeli adı</label>
+  <input id="kTts" placeholder="gemini-3.1-flash-tts-preview">
+  <label for="kPexels">Pexels API anahtarı</label>
+  <input id="kPexels" type="password" autocomplete="off" placeholder="Görseller için">
+  <button class="btn" id="kaydetBtn">Kaydet</button>
+  <div id="ayarDurum" class="msg"></div>
+  <p class="msg">Anahtarlar sadece bu telefonda saklanır.</p>
+</section>
+</main>
 
-        const animasyonSuresiSosyalMedya = 2500;
-        const animasyonSuresiHakkinda = 2500;
-        const gorunmeGecikmesi = 200;
+<nav id="nav">
+  <button data-v="uret" class="on"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg>Üret</button>
+  <button data-v="kuyruk"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M16 3v4M8 3v4M4 11h16"/></svg>Kuyruk</button>
+  <button data-v="hesap"><svg viewBox="0 0 24 24"><path d="M9 7V3M15 7V3M7 7h10v4a5 5 0 01-10 0zM12 16v5"/></svg>Hesaplar</button>
+  <button data-v="ayar"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>Ayarlar</button>
+</nav>
+</div>
 
-        let tiklamaSayisiKontrolPanel = 0;
-        let ilkTiklamaZamaniKontrolPanel = null;
-        const beklemeSuresiKontrolPanel = 1000;
-        const hedefTiklamaSayisiKontrolPanel = 5;
+<script>
+var $=function(i){return document.getElementById(i)};
+var get=function(k,d){try{var v=localStorage.getItem(k);return v===null?d:v}catch(e){return d}};
+var put=function(k,v){try{localStorage.setItem(k,v)}catch(e){}};
+var esc=function(s){var d=document.createElement('div');d.textContent=String(s==null?'':s);return d.innerHTML};
 
-        sosyalMedyaButon.addEventListener('click', () => {if (sosyalMedyaKutu.offsetHeight <= 40) {kutuyuAc(sosyalMedyaKutu, sosyalMedyaIcerik, animasyonSuresiSosyalMedya, 0);} else {kutuyuKapat(sosyalMedyaKutu, sosyalMedyaIcerik, animasyonSuresiSosyalMedya, 0);}});
-        hakkindaButon.addEventListener('click', () => {if (hakkindaKutu.offsetHeight <= 40) {kutuyuAc(hakkindaKutu, hakkindaIcerik, animasyonSuresiHakkinda, gorunmeGecikmesi);} else {kutuyuKapat(hakkindaKutu, hakkindaIcerik, animasyonSuresiHakkinda, gorunmeGecikmesi);}});
-        kucukFotografAlani.addEventListener('click', () => {buyukFotograf.src = kucukFotograf.src;buyukFotografArkaplan.style.display = 'flex';});
-        buyukFotografArkaplan.addEventListener('click', () => {buyukFotografArkaplan.style.display = 'none';});
-        dahaFazlaBilgiButon.addEventListener('click', () => {
-            const ulasimFormuContainer = document.getElementById('ulasimFormuContainer');
-            if (ulasimFormuContainer) {
-                ulasimFormuContainer.style.display = 'none';
-            }
-            adSoyadFormuDiv.style.display = 'none';
-        });
-        adSoyadDivKontrol.addEventListener('click', () => {
-            const currentTime = new Date().getTime();
-            if (tiklamaSayisiKontrolPanel === 0) {
-                ilkTiklamaZamaniKontrolPanel = currentTime;
-                tiklamaSayisiKontrolPanel++;
-            } else if (currentTime - ilkTiklamaZamaniKontrolPanel <= beklemeSuresiKontrolPanel * tiklamaSayisiKontrolPanel) {
-                tiklamaSayisiKontrolPanel++;
-            } else {
-                tiklamaSayisiKontrolPanel = 1;
-                ilkTiklamaZamaniKontrolPanel = currentTime;
-            }
-            if (tiklamaSayisiKontrolPanel === hedefTiklamaSayisiKontrolPanel) {
-                kontrolPaneliLinki.style.display = 'block';
-                tiklamaSayisiKontrolPanel = 0;
-                ilkTiklamaZamaniKontrolPanel = null;
-            }
-        });
+var KARAKTER=['Dede anlatıcı','Robot','Çizgi hayvan','Bilge hoca'];
+var SURE=[15,30,60];
+var secKarakter=KARAKTER[0], secSure=30, son=null;
 
-        function kutuyuAc(kutu, icerik, sure, elementGecikmesi) {const hedefYukseklik = kutu.scrollHeight;let currentHeight = kutu.offsetHeight;const artis = (hedefYukseklik - currentHeight) / (sure / 10);const icerikElementleri = icerik.children;for (let i = 0; i < icerikElementleri.length; i++) {setTimeout(() => {icerikElementleri[i].style.opacity = 1;}, i * elementGecikmesi);}const animasyon = setInterval(() => {currentHeight += artis;kutu.style.height = currentHeight + 'px';if (currentHeight >= hedefYukseklik) {clearInterval(animasyon);icerik.style.display = 'block';}}, 10);}
-        function kutuyuKapat(kutu, icerik, sure, elementGecikmesi) {let currentHeight = kutu.offsetHeight;const azalisYukseklik = currentHeight / (sure / 10);const icerikElementleri = icerik.children;const animasyon = setInterval(() => {currentHeight -= azalisYukseklik;kutu.style.height = currentHeight + 'px';const kapanmaOrani = (kutu.offsetHeight - 40) / (kutu.scrollHeight - 40);for (let i = 0; i < icerikElementleri.length; i++) {icerikElementleri[i].style.opacity = kapanmaOrani > 0 ? kapanmaOrani : 0;}if (currentHeight <= 40) {clearInterval(animasyon);kutu.style.height = '40px';icerik.style.display = 'none';for (let i = 0; i < icerikElementleri.length; i++) {icerikElementleri[i].style.opacity = 0;}}}, 10);}
-        function adSoyadGonder() {const adSoyad = adSoyadInput.value.trim();if (adSoyad !== "") {let basvurular = JSON.parse(localStorage.getItem('kullaniciBasvurulari')) || [];basvurular.push({ adSoyad: adSoyad });localStorage.setItem('kullaniciBasvurulari', JSON.stringify(basvurular));adSoyadInput.value = '';adSoyadFormuDiv.style.display = 'none';} else {alert('Lütfen adınızı ve soyadınızı girin.');}}
-    </script>
+function chips(id,list,cur,fn){
+  var el=$(id);el.innerHTML='';
+  list.forEach(function(x){
+    var b=document.createElement('button');b.className='chip'+(x===cur?' on':'');
+    b.textContent=id==='sure'?x+' sn':x;
+    b.onclick=function(){fn(x);chips(id,list,x,fn)};el.appendChild(b);
+  });
+}
+chips('karakter',KARAKTER,secKarakter,function(x){secKarakter=x});
+chips('sure',SURE,secSure,function(x){secSure=x});
+
+document.querySelectorAll('#nav button').forEach(function(b){
+  b.onclick=function(){
+    document.querySelectorAll('#nav button').forEach(function(x){x.classList.toggle('on',x===b)});
+    ['uret','kuyruk','hesap','ayar'].forEach(function(v){$('v-'+v).classList.toggle('hide',v!==b.dataset.v)});
+    if(b.dataset.v==='kuyruk')kuyrukCiz();
+  };
+});
+
+$('kGemini').value=get('gemini','');
+$('kModel').value=get('model','gemini-3.8-flash');
+$('kTts').value=get('tts','gemini-3.1-flash-tts-preview');
+$('kPexels').value=get('pexels','');
+$('kaydetBtn').onclick=function(){
+  put('gemini',$('kGemini').value.trim());
+  put('model',$('kModel').value.trim()||'gemini-3.8-flash');
+  put('tts',$('kTts').value.trim()||'gemini-3.1-flash-tts-preview');
+  put('pexels',$('kPexels').value.trim());
+  $('ayarDurum').textContent='Ayarlar kaydedildi';
+};
+
+function durum(t,err){var d=$('durum');d.textContent=t;d.className='msg'+(err?' err':'')}
+
+async function uret(){
+  var konu=$('konu').value.trim();
+  if(!konu){durum('Önce bir konu yaz',true);return}
+  var key=get('gemini','');
+  if(!key){durum('Ayarlar sekmesine Gemini anahtarını gir',true);return}
+  var sahneSayisi=Math.max(3,Math.round(secSure/6));
+  durum('Senaryo yazılıyor…');$('sonuc').innerHTML='';
+  var prompt='Konu: '+konu+'\nAnlatıcı karakter: '+secKarakter+'\nSüre: '+secSure+' saniye\n'+
+   'Türkçe, dikey kısa video için özgün bir senaryo yaz. Tamamen kendi cümlelerinle yaz, başka bir içerikten kopyalama. '+
+   'İlk sahne dikkat çeken bir giriş olsun. Tam '+sahneSayisi+' sahne yaz. Her sahne en fazla 2 kısa cümle olsun. '+
+   'Yalnızca şu JSON biçiminde cevap ver: {"baslik":"...","aciklama":"kısa açıklama ve 3 hashtag","sahneler":[{"metin":"...","arama":"İngilizce görsel arama sözcükleri"}]}';
+  try{
+    var j=await geminiRetry([get('model','gemini-3.8-flash'),'gemini-3.7-flash'],{contents:[{parts:[{text:prompt}]}],generationConfig:{responseMimeType:'application/json'}},key,function(n){durum('Model yoğun, tekrar deneniyor ('+n+')…')});
+    var txt=j.candidates[0].content.parts[0].text.replace(/```json|```/g,'').trim();
+    son=JSON.parse(txt);
+    if(!son.sahneler||!son.sahneler.length)throw new Error('Senaryo boş geldi, tekrar dene');
+  }catch(e){durum('Senaryo üretilemedi: '+e.message,true);return}
+  var pk=get('pexels','');
+  if(pk){
+    durum('Görseller aranıyor…');
+    for(var i=0;i<son.sahneler.length;i++){
+      try{
+        var pr=await fetch('https://api.pexels.com/v1/search?per_page=1&orientation=portrait&query='+encodeURIComponent(son.sahneler[i].arama||konu),{headers:{Authorization:pk}});
+        var pj=await pr.json();
+        if(pj.photos&&pj.photos[0])son.sahneler[i].gorsel=pj.photos[0].src.large;
+      }catch(e){}
+    }
+  }
+  durum('');sonucCiz();
+}
+$('uretBtn').onclick=uret;
+
+function sonucCiz(){
+  var h='<div class="card"><b>'+esc(son.baslik)+'</b><div class="sub">'+esc(son.aciklama)+'</div></div>';
+  son.sahneler.forEach(function(s){
+    h+='<div class="card scene">'+(s.gorsel?'<img src="'+esc(s.gorsel)+'" alt="">':'')+'<div>'+esc(s.metin)+'</div></div>';
+  });
+  h+='<button class="btn" id="videoBtn">Video oluştur</button><div id="videoAlan"></div><button class="btn alt" id="dinleBtn">Sesli dinle</button><button class="btn alt" id="ekleBtn">Kuyruğa ekle</button><button class="btn alt" id="paylasBtn">Paylaş</button>';
+  $('sonuc').innerHTML=h;
+  $('videoBtn').onclick=function(){videoYap(son)};
+  $('dinleBtn').onclick=function(){dinle(son)};
+  $('ekleBtn').onclick=function(){var q=kuyruk();q.unshift(son);put('kuyruk',JSON.stringify(q));durum('Kuyruğa eklendi')};
+  $('paylasBtn').onclick=function(){paylas(son)};
+}
+
+function dinle(v){
+  if(!window.speechSynthesis){durum('Bu telefonda sesli okuma yok',true);return}
+  speechSynthesis.cancel();
+  v.sahneler.forEach(function(s){var u=new SpeechSynthesisUtterance(s.metin);u.lang='tr-TR';speechSynthesis.speak(u)});
+}
+function metin(v){return v.baslik+'\n\n'+v.sahneler.map(function(s){return s.metin}).join('\n')+'\n\n'+(v.aciklama||'')}
+async function paylas(v){
+  var t=metin(v);
+  try{
+    var C=window.Capacitor;
+    if(C&&C.Plugins&&C.Plugins.Share){await C.Plugins.Share.share({title:v.baslik,text:t});return}
+    if(navigator.share){await navigator.share({title:v.baslik,text:t});return}
+    await navigator.clipboard.writeText(t);durum('Metin panoya kopyalandı');
+  }catch(e){}
+}
+
+function kuyruk(){try{return JSON.parse(get('kuyruk','[]'))}catch(e){return[]}}
+function kuyrukCiz(){
+  var q=kuyruk(),el=$('kuyrukListe');
+  if(!q.length){el.innerHTML='<p class="msg">İlk videonu üret, burada sıraya girsin.</p>';return}
+  el.innerHTML=q.map(function(v,i){
+    return '<div class="card"><b>'+esc(v.baslik)+'</b><div class="sub">'+v.sahneler.length+' sahne</div>'+
+    '<div class="row" style="margin-top:10px"><button class="chip" data-p="'+i+'">Paylaş</button><button class="chip" data-d="'+i+'">Dinle</button><button class="chip" data-s="'+i+'">Sil</button></div></div>';
+  }).join('');
+  el.querySelectorAll('[data-p]').forEach(function(b){b.onclick=function(){paylas(q[b.dataset.p])}});
+  el.querySelectorAll('[data-d]').forEach(function(b){b.onclick=function(){dinle(q[b.dataset.d])}});
+  el.querySelectorAll('[data-s]').forEach(function(b){b.onclick=function(){q.splice(b.dataset.s,1);put('kuyruk',JSON.stringify(q));kuyrukCiz()}});
+}
+
+function sleep(ms){return new Promise(function(r){setTimeout(r,ms)})}
+async function geminiCall(model,body,key){
+  var url='https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(model)+':generateContent?key='+encodeURIComponent(key);
+  var r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  var j=await r.json();
+  if(!r.ok){var e=new Error((j.error&&j.error.message)||('Hata '+r.status));e.status=r.status;throw e}
+  return j;
+}
+async function geminiRetry(models,body,key,onWait){
+  var last;
+  for(var m=0;m<models.length;m++){
+    for(var t=0;t<3;t++){
+      try{return await geminiCall(models[m],body,key)}
+      catch(e){last=e;if(e.status!==429&&e.status!==500&&e.status!==503)throw e;var mm=/retry in ([\d.]+)s/i.exec(e.message||'');var w=mm?Math.ceil(parseFloat(mm[1]))+2:4*(t+1);if(onWait)onWait(t+1);await sleep(w*1000)}
+    }
+  }
+  throw last;
+}
+
+var SES={
+  'Dede anlatıcı':['Charon','Yaşlı, sıcak ve bilge bir dede gibi, yavaş ve içten söyle'],
+  'Robot':['Puck','Neşeli bir robot gibi, net ve enerjik söyle'],
+  'Çizgi hayvan':['Zephyr','Çizgi film hayvanı gibi, canlı ve eğlenceli söyle'],
+  'Bilge hoca':['Kore','Sakin ve güven veren bir hoca gibi söyle']
+};
+async function sesUret(metin){
+  var c=SES[secKarakter]||SES['Dede anlatıcı'];
+  var body={contents:[{parts:[{text:c[1]+': '+metin}]}],generationConfig:{responseModalities:['AUDIO'],speechConfig:{voiceConfig:{prebuiltVoiceConfig:{voiceName:c[0]}}}}};
+  var j=await geminiRetry([get('tts','gemini-3.1-flash-tts-preview')],body,get('gemini',''),function(n){durum('Ses servisi yoğun, tekrar deneniyor ('+n+')…')});
+  var p=j.candidates[0].content.parts[0].inlineData;
+  var bin=atob(p.data),n=bin.length>>1,f=new Float32Array(n);
+  for(var i=0;i<n;i++){var v=bin.charCodeAt(2*i)|(bin.charCodeAt(2*i+1)<<8);if(v>=32768)v-=65536;f[i]=v/32768}
+  return f;
+}
+
+var PAL=[['#2b2a5c','#7f77dd'],['#1d3b3a','#1d9e75'],['#4a1b0c','#d85a30'],['#0c447c','#378add'],['#4b1528','#d4537e']];
+function sar(g,text,x,y,maxW,lh){
+  var words=String(text).split(' '),lines=[],line='';
+  words.forEach(function(w){var t=line?line+' '+w:w;if(g.measureText(t).width>maxW&&line){lines.push(line);line=w}else line=t});
+  lines.push(line);
+  var y0=y-(lines.length-1)*lh/2;
+  lines.forEach(function(l,i){g.fillText(l,x,y0+i*lh)});
+}
+function cizKare(g,v,starts,durs,el,total){
+  var W=720,H=1280,i=0;
+  for(var k=0;k<starts.length;k++){if(el>=starts[k])i=k}
+  var s=v.sahneler[i],pal=PAL[i%PAL.length],local=Math.max(0,el-starts[i]),dur=Math.max(0.5,durs[i]);
+  var gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,pal[0]);gr.addColorStop(1,'#17161c');
+  g.fillStyle=gr;g.fillRect(0,0,W,H);
+  if(s._img){
+    var im=s._img,sc=Math.max(W/im.width,H/im.height)*(1+0.06*Math.min(1,local/dur));
+    var dw=im.width*sc,dh=im.height*sc;
+    g.drawImage(im,(W-dw)/2,(H-dh)/2,dw,dh);
+    g.fillStyle='rgba(10,10,14,0.5)';g.fillRect(0,0,W,H);
+  }else{
+    g.globalAlpha=0.18;g.fillStyle=pal[1];g.beginPath();g.arc(W/2,H*0.36,200+30*Math.sin(el*2),0,7);g.fill();g.globalAlpha=1;
+  }
+  g.textAlign='center';g.textBaseline='middle';
+  if(i===0){g.font='500 34px system-ui,sans-serif';g.fillStyle='#c9c6f2';sar(g,v.baslik,W/2,150,W-120,44)}
+  g.globalAlpha=Math.min(1,local/0.35);
+  g.font='700 54px system-ui,sans-serif';g.fillStyle='#f1efe8';g.shadowColor='rgba(0,0,0,0.6)';g.shadowBlur=12;
+  sar(g,s.metin,W/2,H*0.56,W-110,72);
+  g.shadowBlur=0;g.globalAlpha=1;
+  g.fillStyle='rgba(255,255,255,0.25)';g.fillRect(60,H-90,W-120,8);
+  g.fillStyle=pal[1];g.fillRect(60,H-90,(W-120)*Math.min(1,el/total),8);
+}
+
+var vidBusy=false,sonVideo=null;
+async function videoYap(v){
+  if(vidBusy)return;
+  if(!window.MediaRecorder){durum('Bu telefon video kaydını desteklemiyor',true);return}
+  if(!get('gemini','')){durum('Ayarlar sekmesine Gemini anahtarını gir',true);return}
+  vidBusy=true;$('videoAlan').innerHTML='';
+  var ac=new (window.AudioContext||window.webkitAudioContext)();
+  var lock=null;
+  try{
+    if(ac.state==='suspended')await ac.resume();
+    try{lock=await navigator.wakeLock.request('screen')}catch(e){}
+    durum('Ses hazırlanıyor…');
+    var tam=v.sahneler.map(function(x){return x.metin}).join(' ');
+    var f=await sesUret(tam);
+    var ab=ac.createBuffer(1,f.length,24000);ab.copyToChannel(f,0);
+    durum('Görseller hazırlanıyor…');
+    await Promise.all(v.sahneler.map(function(s){return new Promise(function(res){
+      if(!s.gorsel)return res();
+      var im=new Image();im.crossOrigin='anonymous';
+      im.onload=function(){s._img=im;res()};im.onerror=function(){res()};im.src=s.gorsel;setTimeout(res,5000);
+    })}));
+    var D=ab.duration,W=0,cum=0,starts=[],durs=[];
+    var ws=v.sahneler.map(function(x){var n=x.metin.length+8;W+=n;return n});
+    ws.forEach(function(w){starts.push(0.4+D*cum/W);durs.push(D*w/W);cum+=w});
+    var total=0.4+D+0.6;
+    var cv=document.createElement('canvas');cv.width=720;cv.height=1280;
+    var g=cv.getContext('2d');
+    var dest=ac.createMediaStreamDestination();
+    var stream=cv.captureStream(30);
+    dest.stream.getAudioTracks().forEach(function(tr){stream.addTrack(tr)});
+    var mimes=['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
+    var mime='';
+    for(var m=0;m<mimes.length;m++){if(MediaRecorder.isTypeSupported(mimes[m])){mime=mimes[m];break}}
+    var rec=new MediaRecorder(stream,mime?{mimeType:mime,videoBitsPerSecond:2500000}:{});
+    var chunks=[];
+    rec.ondataavailable=function(e){if(e.data&&e.data.size)chunks.push(e.data)};
+    var done=new Promise(function(res){rec.onstop=res});
+    rec.start(500);
+    var t0=ac.currentTime+0.1;
+    var src=ac.createBufferSource();src.buffer=ab;src.connect(dest);src.start(t0+0.4);
+    await new Promise(function(res){
+      function frame(){
+        var el=ac.currentTime-t0;
+        if(el>=total){res();return}
+        cizKare(g,v,starts,durs,Math.max(0,el),total);
+        durum('Video kaydediliyor… '+Math.max(0,Math.floor(el))+'/'+Math.ceil(total)+' sn. Uygulamadan çıkma.');
+        requestAnimationFrame(frame);
+      }
+      frame();
+    });
+    rec.stop();await done;
+    var blob=new Blob(chunks,{type:mime||'video/webm'});
+    sonVideo={blob:blob,ext:/mp4/.test(mime)?'mp4':'webm',baslik:v.baslik};
+    $('videoAlan').innerHTML='<video controls playsinline style="width:100%;border-radius:12px;margin-top:12px" src="'+URL.createObjectURL(blob)+'"></video><button class="btn" id="vPaylas">Videoyu paylaş</button>';
+    $('vPaylas').onclick=videoPaylas;
+    durum('Video hazır');
+  }catch(e){durum('Video oluşturulamadı: '+e.message,true)}
+  finally{vidBusy=false;try{ac.close()}catch(e){}try{if(lock)lock.release()}catch(e){}}
+}
+async function videoPaylas(){
+  try{
+    var P=window.Capacitor&&window.Capacitor.Plugins;
+    if(!P||!P.Filesystem||!P.Share){durum('Video paylaşımı sadece uygulamada çalışır',true);return}
+    var b64=await new Promise(function(res,rej){var fr=new FileReader();fr.onload=function(){res(String(fr.result).split(',')[1])};fr.onerror=rej;fr.readAsDataURL(sonVideo.blob)});
+    var r=await P.Filesystem.writeFile({path:'video-'+Date.now()+'.'+sonVideo.ext,data:b64,directory:'CACHE'});
+    await P.Share.share({title:sonVideo.baslik,files:[r.uri]});
+  }catch(e){durum('Paylaşılamadı: '+e.message,true)}
+}
+</script>
 </body>
 </html>
